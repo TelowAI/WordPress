@@ -100,4 +100,32 @@ class Telow_Admin {
 
 	}
 
+	/**
+	 * Add the WPHost Welcome Panel
+	 *
+	 * @since 1.0.0
+	 */
+	public function admin_setting_page() {
+		include_once 'partials/telow-admin-display.php';
+	}
+	
+	/**
+	* Register Telow Admin Menu
+	*
+	* @since    1.0.0
+	*/
+
+	public function admin_menu() {
+		add_options_page(
+			__( 'Telow', 'textdomain' ),
+			__( 'Telow', 'textdomain' ),
+			'manage_options',
+			'telow',
+			array(
+				$this,
+				'admin_setting_page'
+			)
+		);
+	}
+
 }
