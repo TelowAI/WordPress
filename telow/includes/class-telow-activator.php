@@ -3,11 +3,11 @@
 /**
  * Fired during plugin activation
  *
- * @link       http://example.com
+ * @link       https://telow.com
  * @since      1.0.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    Telow
+ * @subpackage Telow/includes
  */
 
 /**
@@ -16,11 +16,11 @@
  * This class defines all code necessary to run during the plugin's activation.
  *
  * @since      1.0.0
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
- * @author     Your Name <email@example.com>
+ * @package    Telow
+ * @subpackage Telow/includes
+ * @author     Telow <support@telow.com>
  */
-class Plugin_Name_Activator {
+class Telow_Activator {
 
 	/**
 	 * Short Description. (use period)

@@ -29,6 +29,6 @@ RUN echo "sendmail_path=sendmail -t -i" >> /usr/local/etc/php/conf.d/sendmail.in
 RUN apt-get install -y wget
 
 #copy built files to WordPress files system
-COPY telow-client/  /var/www/html/wp-content/plugins/telow-client/
+COPY telow/  /var/www/html/wp-content/plugins/telow/
 
 CMD ["apache2-foreground"]

@@ -28,7 +28,7 @@ services:
     # vstm: add shared volume
     volumes:
       - wp_data:/var/www/html
-      - ./telow-client:/var/www/html/wp-content/plugins/telow-client
+      - ./telow:/var/www/html/wp-content/plugins/telow
       - ./wp-content:/var/www/html/wp-content/
 
   wordpress-cli:
@@ -57,7 +57,7 @@ services:
     # vstm: add shared volume
     volumes:
       - wp_data:/var/www/html
-      - ./telow-client:/var/www/html/wp-content/plugins/telow-client/
+      - ./telow:/var/www/html/wp-content/plugins/telow/
       - ./wp-content:/var/www/html/wp-content/
 
 volumes:
