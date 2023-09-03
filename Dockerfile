@@ -1,5 +1,5 @@
 #Base operating System
-FROM library/wordpress:php7.3
+FROM library/wordpress:latest
 
 #install wp-cli
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
@@ -18,9 +18,6 @@ RUN apt-get update -y && \
 RUN apt-get update -y
 RUN apt-get install -y ghostscript
 RUN apt-get install -y imagemagick
-      
-RUN postconf -e myhostname=ncats.nih.gov && \
-      postconf -e relayhost="mailfwd.nih.gov" && service postfix start && postfix reload
 
 RUN echo "sendmail_path=sendmail -t -i" >> /usr/local/etc/php/conf.d/sendmail.ini \
  && echo '#!/bin/bash' >> /usr/local/bin/docker-entrypoint-wrapper.sh \
@@ -32,7 +29,6 @@ RUN echo "sendmail_path=sendmail -t -i" >> /usr/local/etc/php/conf.d/sendmail.in
 RUN apt-get install -y wget
 
 #copy built files to WordPress files system
-COPY default/  /var/www/html/wp-content/themes/default/
+COPY telow-client/  /var/www/html/wp-content/plugins/telow-client/
 
-ENTRYPOINT ["docker-entrypoint-wrapper.sh"]
 CMD ["apache2-foreground"]

@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   db:
-    image: mysql:5.7
+    image: mysql:latest
     volumes:
       - db_data:/var/lib/mysql
     restart: always
@@ -28,7 +28,7 @@ services:
     # vstm: add shared volume
     volumes:
       - wp_data:/var/www/html
-      - ./default:/var/www/html/wp-content/themes/default/
+      - ./telow-client:/var/www/html/wp-content/plugins/telow-client
       - ./wp-content:/var/www/html/wp-content/
 
   wordpress-cli:
@@ -46,11 +46,8 @@ services:
     command: >
       /bin/sh -c '
       sleep 10;
-      wp core install --path="/var/www/html" --url="http://localhost" --title="Website" --admin_user=admin --admin_password=admin --admin_email=admin@admin.admin --skip-email;
-      wp theme activate default;
+      wp core install --path="/var/www/html" --url="http://localhost" --title="TelowClient" --admin_user=admin --admin_password=admin --admin_email=admin@admin.admin --skip-email;
       wp plugin delete hello akismet;
-      wp theme delete twentyfifteen twentysixteen twentyseventeen;
-      wp plugin install timber-library disable-comments onelogin-saml-sso classic-editor ./wp-content/themes/default/plugins/advanced-custom-fields-pro.zip ./wp-content/themes/default/plugins/timber-library.1.8.4.zip;
       wp plugin activate --all;
       wp widget reset --all;
       wp option update timezone_string "America/New_York";
@@ -60,7 +57,7 @@ services:
     # vstm: add shared volume
     volumes:
       - wp_data:/var/www/html
-      - ./default:/var/www/html/wp-content/themes/default/
+      - ./telow-client:/var/www/html/wp-content/plugins/telow-client/
       - ./wp-content:/var/www/html/wp-content/
 
 volumes:
