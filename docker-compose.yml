@@ -1,0 +1,69 @@
+version: "3.3"
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: somewordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+
+  wordpress:
+    depends_on:
+      - db
+    build: .
+    ports:
+      - 80:80
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_TABLE_PREFIX: "wp_"
+      WORDPRESS_DEBUG: 1
+    # vstm: add shared volume
+    volumes:
+      - wp_data:/var/www/html
+      - ./default:/var/www/html/wp-content/themes/default/
+      - ./wp-content:/var/www/html/wp-content/
+
+  wordpress-cli:
+    depends_on:
+      - db
+      - wordpress
+    image: wordpress:cli
+    # vstm: This is required to run wordpress-cli with the same
+    # user-id as wordpress. This way there are no permission problems
+    # when running the cli
+    user: xfs
+    # vstm: The sleep 10 is required so that the command is run after
+    # mysql is initialized. Depending on your machine this might take
+    # longer or it can go faster.
+    command: >
+      /bin/sh -c '
+      sleep 10;
+      wp core install --path="/var/www/html" --url="http://localhost" --title="Website" --admin_user=admin --admin_password=admin --admin_email=admin@admin.admin --skip-email;
+      wp theme activate default;
+      wp plugin delete hello akismet;
+      wp theme delete twentyfifteen twentysixteen twentyseventeen;
+      wp plugin install timber-library disable-comments onelogin-saml-sso classic-editor ./wp-content/themes/default/plugins/advanced-custom-fields-pro.zip ./wp-content/themes/default/plugins/timber-library.1.8.4.zip;
+      wp plugin activate --all;
+      wp widget reset --all;
+      wp option update timezone_string "America/New_York";
+      wp rewrite structure /%postname%/;
+      wp config set DISALLOW_FILE_EDIT true --raw
+      '
+    # vstm: add shared volume
+    volumes:
+      - wp_data:/var/www/html
+      - ./default:/var/www/html/wp-content/themes/default/
+      - ./wp-content:/var/www/html/wp-content/
+
+volumes:
+  db_data:
+  # vstm: add shared volume
+  wp_data:
