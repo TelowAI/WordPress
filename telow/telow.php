@@ -1,5 +1,8 @@
 <?php
 
+require plugin_dir_path( __FILE__ ) . './aws/aws-autoloader.php';
+
+
 /**
  * The plugin bootstrap file
  *
