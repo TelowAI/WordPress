@@ -12,5 +12,12 @@
  * @subpackage Telow/admin/partials
  */
 ?>
-<h1>Telow</h1>
-<hr />
+
+<div class="wrap">
+    <h1>Telow</h1>
+    <form action="options.php" method="post" novalidation="novalidation">
+        <?php settings_fields('telow') ?>
+        <?php do_settings_fields('telow', 'default')?>
+        <?php submit_button(); ?>
+    </form>
+</div>

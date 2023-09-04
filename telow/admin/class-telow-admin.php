@@ -99,21 +99,16 @@ class Telow_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/telow-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
-
-	/**
-	 * Add the WPHost Welcome Panel
-	 *
-	 * @since 1.0.0
-	 */
-	public function admin_setting_page() {
-		include_once 'partials/telow-admin-display.php';
-	}
 	
 	/**
 	* Register Telow Admin Menu
 	*
 	* @since    1.0.0
 	*/
+
+	public function admin_setting_page() {
+		include_once 'partials/telow-admin-display.php';
+	}
 
 	public function admin_menu() {
 		add_options_page(
@@ -127,5 +122,31 @@ class Telow_Admin {
 			)
 		);
 	}
+
+	/**
+	* Register Telow Setting
+	*
+	* @since    1.0.0
+	*/
+
+	public function register_telow_settings() {
+		$args = array(
+			'type' => 'string',
+			'sanitize_callback' => 'sanitize_text_field',
+			'default' => NULL
+		);
+
+		register_setting('telow', 'telow_account', $args);
+
+		add_settings_field(
+			'telow_account',
+			esc_html__('', 'default'),
+			function (){
+				include_once 'partials/telow-admin-fields.php';
+			},
+			'telow'
+		);
+	}
+
 
 }
