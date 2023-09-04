@@ -2,7 +2,6 @@
 
 require plugin_dir_path( __FILE__ ) . './aws/aws-autoloader.php';
 
-
 /**
  * The plugin bootstrap file
  *
@@ -83,3 +82,46 @@ function run_telow() {
 
 }
 run_telow();
+
+
+/**
+ * Include Reporter Class
+ * @since	1.0.0
+ */
+
+require plugin_dir_path( __FILE__ ) . 'includes/class-telow-reporter.php';
+
+
+function telowErrorHandler($errno, $errstr, $errfile = '', $errline = 0, $errcontext = array()){
+    // Getting error type
+    $errorType = array (
+            E_ERROR            => 'ERROR',
+            E_WARNING        => 'WARNING',
+            E_PARSE          => 'PARSING ERROR',
+            E_NOTICE         => 'NOTICE',
+            E_CORE_ERROR     => 'CORE ERROR',
+            E_CORE_WARNING   => 'CORE WARNING',
+            E_COMPILE_ERROR  => 'COMPILE ERROR',
+            E_COMPILE_WARNING => 'COMPILE WARNING',
+            E_USER_ERROR     => 'USER ERROR',
+            E_USER_WARNING   => 'USER WARNING',
+            E_USER_NOTICE    => 'USER NOTICE',
+            E_STRICT         => 'STRICT NOTICE',
+            E_RECOVERABLE_ERROR  => 'RECOVERABLE ERROR'
+            );
+
+	if (array_key_exists($errno, $errorType)) {
+		$err = $errorType[$errno];
+	} else {
+		$err = 'CAUGHT EXCEPTION';
+	}
+
+	$ERROR_URL = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+	// Report Bugs to Telow Stream
+	$reporter = new Telow_Reporter();
+	$reporter->report("$errstr. Error on line $errline in $errfile", $err, $ERROR_URL, 'PHP', $errno);
+
+}
+
+set_error_handler('telowErrorHandler');

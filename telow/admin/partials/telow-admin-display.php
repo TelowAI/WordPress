@@ -14,7 +14,9 @@
 ?>
 
 <div class="wrap">
-    <img src="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'images/logo.svg'; ?>" width="180px"  alt="Telow Logo">
+    <a href="https://telow.com" target="_blank">
+        <img src="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'images/logo.svg'; ?>" width="180px"  alt="Telow Logo">
+    </a>
     <form action="options.php" method="post" novalidation="novalidation">
         <?php settings_fields('telow') ?>
         <?php do_settings_fields('telow', 'default')?>

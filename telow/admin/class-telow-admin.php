@@ -105,7 +105,6 @@ class Telow_Admin {
 	*
 	* @since    1.0.0
 	*/
-
 	public function admin_setting_page() {
 		include_once 'partials/telow-admin-display.php';
 	}
@@ -147,6 +146,5 @@ class Telow_Admin {
 			'telow'
 		);
 	}
-
 
 }
