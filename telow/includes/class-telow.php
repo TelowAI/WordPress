@@ -56,6 +56,7 @@ class Telow {
 	 * @var      string    $version    The current version of the plugin.
 	 */
 	protected $version;
+	
 
 	/**
 	 * Define the core functionality of the plugin.

@@ -16,7 +16,6 @@ require plugin_dir_path( __FILE__ ) . './aws/aws-autoloader.php';
  *
  * @wordpress-plugin
  * Plugin Name:       Telow
- * Plugin URI:        https://telow.com
  * Description:       Telow is a WordPress plugin for tracking all your WP bugs and reporting them to your Telow account. Which can help you solve your bugs with artificial intelligence (AI).
  * Version:           1.0.0
  * Author:            Telow
